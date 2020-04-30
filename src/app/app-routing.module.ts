@@ -12,6 +12,8 @@ import { DashboardComponent } from './pages/backend/dashboard/dashboard.componen
 import { UsersComponent } from './pages/backend/users/users.component';
 import { StockComponent } from './pages/backend/stock/stock.component';
 
+// Auth Guard
+import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
   // Route สำหรับเรียกหน้า Frontend Layout
@@ -21,15 +23,18 @@ const routes: Routes = [
     children: [
       {
         path:'',
-        component: HomeComponent
+        component: HomeComponent,
+        data: { title: "Home"}
       },
       {
         path:'about',
-        component:AboutComponent
+        component:AboutComponent,
+        data: { title: "About"}
       },
       {
       path:'contact',
-      component:ContactComponent
+      component:ContactComponent,
+      data: { title: "Contact"}
       }
     ]
   },
@@ -40,11 +45,13 @@ const routes: Routes = [
     children:[
       {
         path:'login',
-        component: LoginComponent
+        component: LoginComponent,
+        data: { title: "Login"}
       },
       {
         path:'register',
-        component:RegisterComponent
+        component:RegisterComponent,
+        data: { title: "Register"}
       }
     ]
   },
@@ -52,18 +59,27 @@ const routes: Routes = [
   {
     path: 'backend',
     component: BackendLayoutComponent,
+    canActivate: [AuthGuard],
     children:[
       {
         path: '',
-        component: DashboardComponent
+        component: DashboardComponent,
+        data: { title: "Dashboard"}
+      },
+      {
+        path: 'dashboard',
+        component: DashboardComponent,
+        data: { title: "Dashboard"}
       },
       {
         path: 'stock',
-        component: StockComponent
+        component: StockComponent,
+        data: { title: "Stock"}
       },
       {
         path: 'users',
-        component: UsersComponent
+        component: UsersComponent,
+        data: { title: "Users"}
       }
     ]
   }
